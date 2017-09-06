@@ -129,13 +129,13 @@ VM(ViewModel)主要实现了两件事：
   View 到 Model 主要在于解析模板指令，将模板中的属性替换成数据，并将每个指令对应的节点绑定listener函数，添加监听节点的订阅者，一旦节点属性有变动，收到通知，更新model
 
 
-&emsp;&emsp;总体来说，Model到View需要模板引擎来实现，同样View到Model需要解析器来实现，而当View及Model改变时要触发相应的Model及View改变，这需要引入发布-订阅模式和观察者模式来实现。整体流程图如下：
+总体来说，Model到View需要模板引擎来实现，同样View到Model需要解析器来实现，而当View及Model改变时要触发相应的Model及View改变，这需要引入发布-订阅模式和观察者模式来实现。整体流程图如下：
 
 ![](../imgs/Vue-MVVM1.png)
 
 2.Angular框架
 
-Angular框架的MVVM实现原理与Vue基本一致，在数据绑定上有所不同，Vue采用Object.defineProperty来进行数据劫持，而Angular采用脏检查机制，具体实现如下：
+&emsp;&emsp;Angular框架的MVVM实现原理与Vue基本一致，在数据绑定上有所不同，Vue采用Object.defineProperty来进行数据劫持，而Angular采用脏检查机制，具体实现如下：
 Angular 在 scope 模型上设置了一个 监听队列，用来监听数据变化并更新 view 。每次绑定一个数据到 view 上时，就会往 $watch 队列里插入一条 $watch，用来检测它监视的 model 里是否有变化。当浏览器接收到可以被 angular context 处理的事件时(即UI事件，ajax请求或者 timeout 延迟事件)，$digest 循环就会触发，遍历所有的 $watch，最后更新 dom。
 
 ## 参考链接
@@ -160,6 +160,6 @@ Angular 在 scope 模型上设置了一个 监听队列，用来监听数据变�
 
   https://github.com/xufei/blog/issues/10
 
-- API of the defineProperty
+- API of the DefineProperty
 
   https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty

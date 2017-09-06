@@ -23,13 +23,13 @@
 
   ![](../imgs/MVC-1.jpg)
 
-     与观察者模式结合流程(会造成View和Model的强耦合)：
+   与观察者模式结合流程(会造成View和Model的强耦合)：
 
-     - 用户交互进行输入
+   - 用户交互进行输入
 
-     - Controller将用户输入转化为Model所需要进行的更改
+   - Controller将用户输入转化为Model所需要进行的更改
 
-     - View作为Observer会监听Model中的更新，一旦有更新事件发出，View会自动触发更新以展示最新的Model状态
+   - View作为Observer会监听Model中的更新，一旦有更新事件发出，View会自动触发更新以展示最新的Model状态
 
   ![](../imgs/MVC-2.jpg)
 

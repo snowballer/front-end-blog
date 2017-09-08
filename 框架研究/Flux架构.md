@@ -36,7 +36,7 @@
 
 - Action：包含Action Type以及应用送往store(存储)的信息载荷(payload,也可称为有效信息)
 
-  Action具有固定格式的，即FSA, 全称为Flux Standard Action，格式如下:
+  Action具有固定格式，即FSA, 全称为Flux Standard Action，格式如下:
 
   ```javascript
 

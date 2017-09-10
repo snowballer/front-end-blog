@@ -61,16 +61,9 @@
 
   ```
 
-- Action Creator ：是一种辅助创建Action的函数，类似工厂模式，传入参数生成对应的Action ，如下所示：
+- Action Creator ：是一种辅助创建Action的函数，类似工厂模式，传入参数生成对应的Action ，并将Action 传递给 Dispatcher ，如下所示：
 
   ```javascript
-
-  let addItemAction = (text = 'First thing')=>{  
-    return{      
-      type:'ADD_ITEM',
-      text
-    }
-  }
 
   actionCreateor(text) {
     Dispatcher.dispatch({

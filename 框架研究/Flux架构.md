@@ -72,6 +72,13 @@
     }
   }
 
+  actionCreateor(text) {
+    Dispatcher.dispatch({
+      actionType: 'ADD_ITEM',
+      text: text
+    });
+  }
+
   ```
 
 - Web Utils : 用于网络请求，获取服务器端数据(axios、fetch及ajax等方式发起http请求)

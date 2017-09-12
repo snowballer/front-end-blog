@@ -10,7 +10,7 @@
 
 ## 流程图
 
-![](../imgs/reduxFlow.png)
+![](../imgs/redux-flow.png)
 
 ## 核心概念
 

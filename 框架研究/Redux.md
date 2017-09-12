@@ -135,3 +135,7 @@
   const todoApp = combineReducers(reducers)
 
   ```
+
+## 深入理解
+
+- Middleware : 中间件。 在 Express 或者 Koa 服务端框架中，middleware 是指可以被嵌入在框架接收请求到产生响应过程之中的代码。而在 Redux 中，middleware 是指 action 被发起之后，到达 reducer 之前的代码。middleware 最优秀的特性就是可以被链式组合，可以利用 Redux middleware 来进行日志记录、创建崩溃报告、调用异步接口或者路由等操作。

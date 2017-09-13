@@ -255,4 +255,4 @@
    ```
   - react-router-redux : 用来处理路由跳转的中间件。
 
-    ![](../imgs/react-router-redux.png)
+  ![](../imgs/react-router-redux.png)

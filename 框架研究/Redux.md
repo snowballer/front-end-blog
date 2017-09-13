@@ -207,7 +207,7 @@
 
   ```
 
-- Redux常用的middleware主要分为两大类: 异步处理中间件和路由跳转中间件。异步处理中间件以redux-saga为代表，路由跳转中间件以react-router-redux为代表。
+- Redux常用的middleware主要为: 异步处理中间件和路由跳转中间件。异步处理中间件以redux-saga为代表，路由跳转中间件以react-router-redux为代表。
 
   - redux-saga : 主要用来处理异步行为。saga 把副作用 (Side effect，异步行为就是典型的副作用) 看成”线程”，可以通过普通的action去触发它，当副作用完成时也会触发action作为输出。如下图所示，可以很直观得去理解saga :
 
@@ -302,3 +302,65 @@
 
 
 ## React与Redux的结合
+
+Redux 仅仅是一个用于管理状态的库，你可以与 Vue 、Angluar 等框架配合使用，当然契合度最佳的莫过于 React。react-redux提供两个关键模块：Provider和connect。
+
+- Provider : 使容器组件获取到state。
+
+  ```javascript
+
+  import { Provider } from 'react-redux'
+  import { createStore } from 'redux'
+  import todoApp from './reducers'
+  import App from './components/App'
+
+  let store = createStore(todoApp);
+  ReactDOM.render(
+  	<Provider store={store}>
+  		<App />
+  	</Provider>,
+  	document.getElementById('root')
+  );
+
+  ```
+
+- connect : 连接 React 组件与 Redux store。操作不会改变原来的组件，而是返回一个新的已与 Redux store 连接的组件类。
+
+  API : connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+
+  [mapStateToProps(state, [ownProps]): stateProps] (Function): 如果定义该参数，组件将会监听 Redux store 的变化。任何时候，只要 Redux store 发生改变，mapStateToProps 函数就会被调用。该回调函数必须返回一个纯对象，这个对象会与组件的 props 合并。如果你省略了这个参数，你的组件将不会监听 Redux store。
+
+  [mapDispatchToProps(dispatch, [ownProps]): dispatchProps] (Object or Function): 如果传递的是一个对象，那么每个定义在该对象的函数都将被当作 Redux action creator，而且这个对象会与 Redux store 绑定在一起，其中所定义的方法名将作为属性名，合并到组件的 props 中。如果传递的是一个函数，该函数将接收一个 dispatch 函数，然后由你来决定如何返回一个对象，这个对象通过 dispatch 函数与 action creator 以某种方式绑定在一起（提示：你也许会用到 Redux 的辅助函数 bindActionCreators()）
+
+  ```javascript
+  //容器类组件
+  class Home extends React.Component{
+    ...
+    render(){
+      return(
+        ...
+      );
+    }
+  }
+
+  //actionCreator模块
+  const fetchDetailFeed = (id) => ({
+    type: FETCH_DETAIL_FEED,
+    payload: id
+  })
+
+  //必须返回一个对象，这样connect时fetchDetailFeed便为Redux action creator
+  export default {
+    fetchDetailFeed
+  }
+
+
+  //连接组件
+  export default connect(
+    //{ homeFeed, platform } = state 解构赋值
+    //箭头函数返回对象需要括号({ homeFeed, platform })
+    //这里的actionCreator为一对象
+    ({ homeFeed, platform }) => ({ homeFeed, platform }),actionCreator
+  )(Home)
+
+  ```

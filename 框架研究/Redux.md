@@ -219,7 +219,7 @@
     const store = createStore(rootReducer, [], compose(
           applyMiddleware(sagaMiddleware)
     );
-    // 将 Saga 连接至外部的输入和输出,返回一个 Task 对象,类似 fork Effect 返回的
+    // 将 Saga 连接至外部的输入和 输出,返回一个 Task 对象,类似 fork Effect 返回的
     sagaMiddleware.run(rootSaga);
 
    // redux-saga API/effect
@@ -230,7 +230,7 @@
     payload: homeFeed
   })
 
-   //select获取State 下数据。
+   //select获取 State 下数据。
    let homeFeed = yield select(state => state.homeFeed)
 
    //等待 Store 上指定的 action。

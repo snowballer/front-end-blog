@@ -364,3 +364,9 @@ Redux 仅仅是一个用于管理状态的库，你可以与 Vue 、Angluar 等�
     )(Home)
 
   ```
+
+  在通常情况下，表现为connect(state,{actionCreator})
+
+React与Redux流程图 :
+
+![](../imgs/redux-react.png)

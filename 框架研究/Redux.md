@@ -136,6 +136,33 @@
 
   ```
 
+- View : 在 Redux 中，组件分为smart component(容器类组件) 和 dumb component(展示型组件)。
+
+  - 容器类组件: 与redux或router进行连接,起到了维护状态，分发action的作用
+
+  - 展示类组件: 不维护状态，所有的状态由容器组件通过props传递，所有操作通过回调完成
+
+  ```javascript
+  //容器类组件
+  import React,{Component} from 'react';
+
+  class Class extends Component {
+    ...
+    render() {
+      return (
+        <div>
+          <Title  value={this.state.value} />
+        </div>
+      );
+    }
+  }
+
+
+  //展示类组件
+  const Title = ({value}) => (<h1>{value}</h1>);
+
+  ```
+
 ## 深入理解
 
 - Middleware : 中间件。 在 Express 或者 Koa 服务端框架中，middleware 是指可以被嵌入在框架接收请求到产生响应过程之中的代码。而在 Redux 中，middleware 是指 action 被发起之后，到达 reducer 之前的代码，确切的说是dispatch之前的代码。middleware 最优秀的特性就是可以被链式组合，可以利用 Redux middleware 来进行日志记录、创建崩溃报告、调用异步接口或者路由等操作。如下所示：
@@ -314,13 +341,14 @@ Redux 仅仅是一个用于管理状态的库，你可以与 Vue 、Angluar 等�
   import todoApp from './reducers'
   import App from './components/App'
 
-  let store = createStore(todoApp);
+  let store = createStore(todoApp)
+
   ReactDOM.render(
   	<Provider store={store}>
   		<App />
   	</Provider>,
   	document.getElementById('root')
-  );
+  )
 
   ```
 
@@ -370,3 +398,53 @@ Redux 仅仅是一个用于管理状态的库，你可以与 Vue 、Angluar 等�
 ## React与Redux相结合的流程图
 
 ![](../imgs/redux-react.png)
+
+## 参考链接
+
+- Redux：
+
+  https://github.com/reactjs/redux/tree/master/src
+
+  https://github.com/jasonslyvia/a-cartoon-intro-to-redux-cn
+
+  https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6
+
+  https://medium.com/@meagle/understanding-87566abcfb7a
+
+  https://zhuanlan.zhihu.com/p/24337401
+
+  https://zhuanlan.zhihu.com/p/20597452
+
+  https://segmentfault.com/a/1190000005766289
+
+  http://cn.redux.js.org/
+
+  http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html
+
+  https://www.zhihu.com/question/41312576
+
+- Redux-saga：
+
+  https://zhuanlan.zhihu.com/p/25024255
+
+  https://zhuanlan.zhihu.com/p/23012870
+
+  http://leonshi.com/redux-saga-in-chinese/index.html
+
+- React-Redux：
+
+  https://github.com/reactjs/react-redux
+
+- React-Router-Redux：
+
+  https://github.com/ReactTraining/react-router/tree/master/packages/react-router-redux
+
+- API of the Object.assign()
+
+  https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+
+- FP(function program)：
+
+  https://github.com/llh911001/mostly-adequate-guide-chinese
+
+  https://zhuanlan.zhihu.com/p/21714695

@@ -142,7 +142,7 @@
 
  ![](../imgs/redux-middleware.jpg)
 
-    ```javascript
+  ```javascript
 
       //中间件的导入
       const store = createStore(reducers, initState, applyMiddleware(...middlewares))
@@ -205,7 +205,7 @@
         }
       }
 
-    ```
+  ```
 
 - Redux常用的middleware主要分为两大类: 异步处理中间件和路由跳转中间件。异步处理中间件以redux-saga为代表，路由跳转中间件以react-router-redux为代表。
 

@@ -138,4 +138,118 @@
 
 ## 深入理解
 
-- Middleware : 中间件。 在 Express 或者 Koa 服务端框架中，middleware 是指可以被嵌入在框架接收请求到产生响应过程之中的代码。而在 Redux 中，middleware 是指 action 被发起之后，到达 reducer 之前的代码。middleware 最优秀的特性就是可以被链式组合，可以利用 Redux middleware 来进行日志记录、创建崩溃报告、调用异步接口或者路由等操作。
+- Middleware : 中间件。 在 Express 或者 Koa 服务端框架中，middleware 是指可以被嵌入在框架接收请求到产生响应过程之中的代码。而在 Redux 中，middleware 是指 action 被发起之后，到达 reducer 之前的代码，确切的说是dispatch之前的代码。middleware 最优秀的特性就是可以被链式组合，可以利用 Redux middleware 来进行日志记录、创建崩溃报告、调用异步接口或者路由等操作。如下所示：
+
+ ![](../imgs/redux-middleware.jpg)
+
+    ```javascript
+
+      //中间件的导入
+      const store = createStore(reducers, initState, applyMiddleware(...middlewares))
+
+      //applyMiddleware源码
+      import compose from './compose'
+
+      export default function applyMiddleware(...middlewares) {
+
+        //enhancer是增强器的意思，这里即为应用中间件
+        //这里涉及到函数柯里化
+        //函数柯里化ES6表现：
+        // const logger = store => next => action => {
+        //   console.log('dispatching', action)
+        //   let result = next(action)
+        //   console.log('next state', store.getState())
+        //   return result
+        // }
+        //
+        // 等价于下面高阶函数：
+        // function logger(store) {
+        //   return function wrapDispatchToAddLogging(next) {
+        //     return function dispatchAndLog(action) {
+        //       console.log('dispatching', action)
+        //       let result = next(action)
+        //       console.log('next state', store.getState())
+        //       return result
+        //     }
+        //   }
+        // }
+
+        return (createStore) => (reducer, preloadedState, enhancer) => {
+          const store = createStore(reducer, preloadedState, enhancer)
+          // 原先store.dispatch方法
+          let dispatch = store.dispatch
+          // 链数组，用于存放middleware
+          let chain = []
+
+          //暴露middlewareAPI给第三方中间件使用
+          const middlewareAPI = {
+            getState: store.getState,
+            //applyMiddleware 执行完后，dispatch 会发生变化
+            //匿名函数是为了只要 dispatch 更新了，middlewareAPI 中的 dispatch 应用也会发生变化
+            dispatch: (...args) => dispatch(...args)
+          }
+
+          //通过map方法使中间件可以获取middlewareAPI
+          chain = middlewares.map(middleware => middleware(middlewareAPI))
+
+          //compose是FP(函数式编程)中常用方法，用于从右至左来组合函数
+          //扩展dispatch方法，类似dispatch=f1(f2(f3(store.dispatch)))的效果
+          //middleware内部dispatch方法改变，但不会影响原来store.dispatch方法
+          //即dispatch为store.dispatch的高阶函数
+          dispatch = compose(...chain)(store.dispatch)
+
+          return {
+            ...store,
+            dispatch
+          }
+        }
+      }
+
+    ```
+
+- Redux常用的middleware主要分为两大类: 异步处理中间件和路由跳转中间件。异步处理中间件以redux-saga为代表，路由跳转中间件以react-router-redux为代表。
+
+  - redux-saga : 主要用来处理异步行为。saga 把副作用 (Side effect，异步行为就是典型的副作用) 看成”线程”，可以通过普通的action去触发它，当副作用完成时也会触发action作为输出。如下图所示，可以很直观得去理解saga :
+
+   ![](../imgs/redux-saga.png)
+
+   ```javascript
+   // redux-saga 启动
+    const sagaMiddleware = createSagaMiddleware();
+    const store = createStore(rootReducer, [], compose(
+          applyMiddleware(sagaMiddleware)
+    );
+    // 将 Saga 连接至外部的输入和输出,返回一个 Task 对象,类似 fork Effect 返回的
+    sagaMiddleware.run(rootSaga);
+
+   // redux-saga API/effect
+
+   //put的作用和 redux 中的 dispatch 相同。
+   yield put({
+    type: SET_HOME_FEED,
+    payload: homeFeed
+  })
+
+   //select获取State 下数据。
+   let homeFeed = yield select(state => state.homeFeed)
+
+   //等待 Store 上指定的 action。
+   const { payload: id } = yield take(FETCH_DETAIL_FEED)
+
+   //redux-saga 可以用 fork 来调用子 saga ，其中 fork 是无阻塞型调用
+   function* countSaga () {
+      while (true) {
+        const { payload: number } = yield take(BEGIN_COUNT);
+        const countTaskId = yield fork(count, number);
+
+        yield take(STOP_TASK);
+        yield cancel(countTaskId);
+      }
+    }
+
+    //redux-saga 也可以用 fork 来调用子 saga ，其中 call 是阻塞型调用
+    const homeFeed = (yield call(homeService.fetchHomeFeed)).data
+
+    const replyList = (yield call(detailService.fetchReplyList, id)).data
+
+   ```

@@ -333,34 +333,34 @@ Redux 仅仅是一个用于管理状态的库，你可以与 Vue 、Angluar 等�
   [mapDispatchToProps(dispatch, [ownProps]): dispatchProps] (Object or Function): 如果传递的是一个对象，那么每个定义在该对象的函数都将被当作 Redux action creator，而且这个对象会与 Redux store 绑定在一起，其中所定义的方法名将作为属性名，合并到组件的 props 中。如果传递的是一个函数，该函数将接收一个 dispatch 函数，然后由你来决定如何返回一个对象，这个对象通过 dispatch 函数与 action creator 以某种方式绑定在一起（提示：你也许会用到 Redux 的辅助函数 bindActionCreators()）
 
   ```javascript
-  //容器类组件
-  class Home extends React.Component{
-    ...
-    render(){
-      return(
-        ...
-      );
+    //容器类组件
+    class Home extends React.Component{
+      ...
+      render(){
+        return(
+          ...
+        );
+      }
     }
-  }
 
-  //actionCreator模块
-  const fetchDetailFeed = (id) => ({
-    type: FETCH_DETAIL_FEED,
-    payload: id
-  })
+    //actionCreator模块
+    const fetchDetailFeed = (id) => ({
+      type: FETCH_DETAIL_FEED,
+      payload: id
+    })
 
-  //必须返回一个对象，这样connect时fetchDetailFeed便为Redux action creator
-  export default {
-    fetchDetailFeed
-  }
+    //必须返回一个对象，这样connect时fetchDetailFeed便为Redux action creator
+    export default {
+      fetchDetailFeed
+    }
 
 
-  //连接组件
-  export default connect(
-    //{ homeFeed, platform } = state 解构赋值
-    //箭头函数返回对象需要括号({ homeFeed, platform })
-    //这里的actionCreator为一对象
-    ({ homeFeed, platform }) => ({ homeFeed, platform }),actionCreator
-  )(Home)
+    //连接组件
+    export default connect(
+      //{ homeFeed, platform } = state 解构赋值
+      //箭头函数返回对象需要括号({ homeFeed, platform })
+      //这里的actionCreator为一对象，内部存在函数
+      ({ homeFeed, platform }) => ({ homeFeed, platform }),actionCreator
+    )(Home)
 
   ```

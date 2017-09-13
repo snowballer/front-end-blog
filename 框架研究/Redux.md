@@ -257,3 +257,48 @@
   - react-router-redux : 用来处理路由跳转的中间件。
 
   ![](../imgs/react-router-redux.png)
+
+  ```javascript
+
+  //创建一个 Redux 中间件，将 router 与 Redux Store 建立连接
+  import createHistory from 'history/createBrowserHistory'
+  import {routerMiddleware} from 'react-router-redux'
+
+  const history = createHistory();
+  const historyMiddleware = routerMiddleware(history);
+
+  const store = createStore(
+    createRootReducer(),
+    initState,
+    compose(
+      historyMiddleware
+    )
+  )
+
+  //路由映射
+  const routeconfig =(
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/detail/:id" component={Detail}></Route>
+        <Route component={NotFound}></Route>
+      </Switch>
+    </ConnectedRouter>
+  );
+
+  //注入组件
+  class App extends Component {
+    render() {
+      return (
+        <Container>
+          {routeconfig}
+        </Container>
+      );
+    }
+  }
+
+  ```
+- 总结 : Redux中间件的实质是对store.dispatch 方法的再包装，以达到 dispatch 一些除了 action 以外的其他内容，例如：函数或者 Promise。
+
+
+## React与Redux的结合

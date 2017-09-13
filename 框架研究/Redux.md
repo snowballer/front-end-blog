@@ -142,70 +142,70 @@
 
  ![](../imgs/redux-middleware.jpg)
 
-    ```javascript
+  ```javascript
 
-        //中间件的导入
-        const store = createStore(reducers, initState, applyMiddleware(...middlewares))
+      //中间件的导入
+      const store = createStore(reducers, initState, applyMiddleware(...middlewares))
 
-        //applyMiddleware源码
-        import compose from './compose'
+      //applyMiddleware源码
+      import compose from './compose'
 
-        export default function applyMiddleware(...middlewares) {
+      export default function applyMiddleware(...middlewares) {
 
-          //enhancer是增强器的意思，这里即为应用中间件
-          //这里涉及到函数柯里化
-          //函数柯里化ES6表现：
-          // const logger = store => next => action => {
-          //   console.log('dispatching', action)
-          //   let result = next(action)
-          //   console.log('next state', store.getState())
-          //   return result
-          // }
-          //
-          // 等价于下面高阶函数：
-          // function logger(store) {
-          //   return function wrapDispatchToAddLogging(next) {
-          //     return function dispatchAndLog(action) {
-          //       console.log('dispatching', action)
-          //       let result = next(action)
-          //       console.log('next state', store.getState())
-          //       return result
-          //     }
-          //   }
-          // }
+        //enhancer是增强器的意思，这里即为应用中间件
+        //这里涉及到函数柯里化
+        //函数柯里化ES6表现：
+        // const logger = store => next => action => {
+        //   console.log('dispatching', action)
+        //   let result = next(action)
+        //   console.log('next state', store.getState())
+        //   return result
+        // }
+        //
+        // 等价于下面高阶函数：
+        // function logger(store) {
+        //   return function wrapDispatchToAddLogging(next) {
+        //     return function dispatchAndLog(action) {
+        //       console.log('dispatching', action)
+        //       let result = next(action)
+        //       console.log('next state', store.getState())
+        //       return result
+        //     }
+        //   }
+        // }
 
-          return (createStore) => (reducer, preloadedState, enhancer) => {
-            const store = createStore(reducer, preloadedState, enhancer)
-            // 原先store.dispatch方法
-            let dispatch = store.dispatch
-            // 链数组，用于存放middleware
-            let chain = []
+        return (createStore) => (reducer, preloadedState, enhancer) => {
+          const store = createStore(reducer, preloadedState, enhancer)
+          // 原先store.dispatch方法
+          let dispatch = store.dispatch
+          // 链数组，用于存放middleware
+          let chain = []
 
-            //暴露middlewareAPI给第三方中间件使用
-            const middlewareAPI = {
-              getState: store.getState,
-              //applyMiddleware 执行完后，dispatch 会发生变化
-              //匿名函数是为了只要 dispatch 更新了，middlewareAPI 中的 dispatch 应用也会发生变化
-              dispatch: (...args) => dispatch(...args)
-            }
+          //暴露middlewareAPI给第三方中间件使用
+          const middlewareAPI = {
+            getState: store.getState,
+            //applyMiddleware 执行完后，dispatch 会发生变化
+            //匿名函数是为了只要 dispatch 更新了，middlewareAPI 中的 dispatch 应用也会发生变化
+            dispatch: (...args) => dispatch(...args)
+          }
 
-            //通过map方法使中间件可以获取middlewareAPI
-            chain = middlewares.map(middleware => middleware(middlewareAPI))
+          //通过map方法使中间件可以获取middlewareAPI
+          chain = middlewares.map(middleware => middleware(middlewareAPI))
 
-            //compose是FP(函数式编程)中常用方法，用于从右至左来组合函数
-            //扩展dispatch方法，类似dispatch=f1(f2(f3(store.dispatch)))的效果
-            //middleware内部dispatch方法改变，但不会影响原来store.dispatch方法
-            //即dispatch为store.dispatch的高阶函数
-            dispatch = compose(...chain)(store.dispatch)
+          //compose是FP(函数式编程)中常用方法，用于从右至左来组合函数
+          //扩展dispatch方法，类似dispatch=f1(f2(f3(store.dispatch)))的效果
+          //middleware内部dispatch方法改变，但不会影响原来store.dispatch方法
+          //即dispatch为store.dispatch的高阶函数
+          dispatch = compose(...chain)(store.dispatch)
 
-            return {
-              ...store,
-              dispatch
-            }
+          return {
+            ...store,
+            dispatch
           }
         }
+      }
 
-    ```
+  ```
 
 - Redux常用的middleware主要分为两大类: 异步处理中间件和路由跳转中间件。异步处理中间件以redux-saga为代表，路由跳转中间件以react-router-redux为代表。
 

@@ -274,7 +274,7 @@
       }
     }
 
-    //redux-saga 也可以用 fork 来调用子 saga ，其中 call 是阻塞型调用
+    //redux-saga 也可以用 call 来调用子 saga ，其中 call 是阻塞型调用
     const homeFeed = (yield call(homeService.fetchHomeFeed)).data
 
     const replyList = (yield call(detailService.fetchReplyList, id)).data

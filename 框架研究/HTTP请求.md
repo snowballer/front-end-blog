@@ -31,7 +31,7 @@ Ajax由JavaScript、XMLHTTPRequest、DOM对象组成，通过XMLHTTPRequest对�
   //       4 = 发送完成
 ```
 
-缺陷 : 配置和调用方式非常繁琐, 不支持浏览器后退事件 ，安全性不高
+缺陷 : 配置和调用方式非常繁琐 , 不支持浏览器后退事件 ，安全性不高
 
 ## Fetch
 

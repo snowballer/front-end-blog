@@ -31,7 +31,7 @@ Ajax由JavaScript、XMLHTTPRequest、DOM对象组成，通过XMLHTTPRequest对�
   //       4 = 发送完成
 ```
 
-缺陷 : 配置和调用方式非常繁琐 , 不支持浏览器后退事件 ，安全性不高
+缺陷 : 配置和调用方式非常繁琐 , 不支持浏览器后退事件 ，安全性不高 ，请求后的数据需要使用 json 解析
 
 ## Fetch
 
@@ -59,3 +59,78 @@ async function(){
 ```
 
 优势 : 语法简洁，更加语义化，基于标准 Promise 实现，支持 async/await
+
+## Axios
+
+Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。浏览器端发起XMLHttpRequests请求，node端发起http请求。并且能够自动转化json数据，是如今JS框架主流的 HTTP 库。
+
+```javascript
+//常规使用
+axios.get('/user?ID=1024')
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+axios.post('/user', {
+    id : 1024
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+//并发请求
+axios.all([
+  axios.get('/user/1024'),
+  axios.get('/user/1024/profile')
+]).then(axios.spread(function(res1,res2){
+  //所有请求都完成时会触发当前函数
+  //当所有的请求都完成后，会收到一个数组，包含着响应对象
+  //其中的顺序和请求发送的顺序相同
+  //axios.spread方法会将其分割成多个单独的响应对象
+  console.log(res1.data);
+  console.log(res2.data);
+}));
+
+//API配置
+//axios(config)
+axios({
+  method: 'post',
+  url: '/user/1024',
+  data: {
+    name : 'snowball'
+  }
+});
+
+//axios(url[, config])
+//发送get请求(默认为get方式)
+axios('/user/1024');
+
+```
+
+优势 : 支持同构(即前后端都可以使用)，支持 promise ，简洁方便 ，易操作 ，安全性好
+
+## 参考链接
+
+- Ajax :
+
+  https://developer.mozilla.org/zh-CN/docs/AJAX
+
+  https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
+
+- Fetch :
+
+  https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API
+
+  https://segmentfault.com/a/1190000003810652
+
+- Axios :
+
+  https://github.com/mzabriskie/axios
+
+  https://segmentfault.com/a/1190000008470355?utm_source=tuicool&utm_medium=referral

@@ -1,4 +1,4 @@
-# apply、call和bind之间的区别
+# apply、call和bind间的区别
 
 > 三者之间的共同点：都可以改变函数体内this的指向
 

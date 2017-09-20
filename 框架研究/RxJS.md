@@ -4,4 +4,4 @@
 
 # 核心概念
 
-- Observable
+- Observer

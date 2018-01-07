@@ -2,7 +2,7 @@
 
 > 函数式编程（Functional Programming，简称FP），和OOP(Object-oriented Programming)一样，是一种编程范式。FP简单点说，核心就是用函数组合的方式（Lambda演算）来描述计算过程，从而实现输入与输出的功能。
 
-## 核心特点
+## 特性
 
 - 函数是一等公民（First-class Function）  
   
@@ -25,7 +25,7 @@
   
   函数应该接收输入值，并且返回输出值
 
-## JS函数式编程
+## JS函数式进程
    
 在ES6和Babel普及前，JS对函数式编程范式支持度并不好。随着ES6的普及，ES6中的很多新特性提升了JS对函数式编程范式支持度。
 
@@ -56,3 +56,31 @@
 - 扩展运算符
 
 示例代码：https://jsbin.com/xucukoc/edit?js,console
+
+## 函数式理论
+
+- 纯函数（pure function）
+
+  无副作用：只要函数的输入值（参数）确定，则函数的输出值（返回值）固定
+
+  示例代码：https://jsbin.com/cipozix/edit?js,console
+
+- 高阶函数 (higher-order function)
+
+  至少满足下列条件之一的函数：
+
+  &nbsp;&nbsp;1.接受函数作为参数
+      
+  &nbsp;&nbsp;2.返回一个函数
+
+  示例代码：https://jsbin.com/batoti/edit?js,console
+  
+- 柯里化（currying）
+  
+  把接受多个参数的原函数变换成只接受一个单一参数的原函数
+
+  柯里化的实质是原函数自身返回一个新函数来接受第二个参数，依次返回并接受剩余参数
+
+  示例代码：https://jsbin.com/yefipos/edit?js,console
+
+- 组合 (compose)

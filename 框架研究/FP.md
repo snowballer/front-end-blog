@@ -97,7 +97,7 @@
 
 ## 函数式应用
 
-- 数据交互（ajax）
+- 数据交互（Ajax）
 
   前后端数据交互时，经常需要对数据进行再处理，而此类数据结构操作使用列表操作函数（map、filter、reduce等）进行函数组合会让数据流更加清晰
 
@@ -109,9 +109,10 @@
 
   示例代码：React高阶组件demo
 
-- 状态管理 (redux)
+- 状态管理 (Redux)
   
-  
+  https://github.com/snowballer/front-end-blog/blob/master/%E6%A1%86%E6%9E%B6%E7%A0%94%E7%A9%B6/Redux.md
+
 ## JS函数库 
 
 - <a href="http://ramdajs.com/">Ramda</a>

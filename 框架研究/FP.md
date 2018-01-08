@@ -94,3 +94,22 @@
   compose实现函数从右至左组合，pipe实现函数从左至右组合
 
   示例代码：https://jsbin.com/movihut/edit?js,console
+
+## 函数式应用
+
+- 数据交互（ajax）
+
+  前后端数据交互时，经常需要对数据进行再处理，而此类数据结构操作使用列表操作函数（map、filter、reduce等）进行函数组合会让数据流更加清晰
+
+  示例代码：https://jsbin.com/ganinuf/edit?js,console
+
+- 高阶组件（HOC）
+
+  顾名思义，跟高阶函数类似，高阶组件接受组件为参数，并返回一个组件
+
+  示例代码：React高阶组件demo
+
+- 状态管理 (redux)
+  
+  
+  

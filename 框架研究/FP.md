@@ -112,4 +112,12 @@
 - 状态管理 (redux)
   
   
-  
+## JS函数库 
+
+- <a href="http://ramdajs.com/">Ramda</a>
+
+- <a href="https://lodash.com/">Lodash</a>
+
+- <a href="http://underscorejs.org/">Underscore</a>
+
+- <a href="https://facebook.github.io/immutable-js/docs/">Immutable</a>

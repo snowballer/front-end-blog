@@ -30,4 +30,14 @@
 
   当Observable（被观察者）变化时，会通知Observer（观察者）
 
-## Rx库
+## Rx/js库
+
+- Observable
+
+- Observer
+
+- Operators 
+
+- Subject
+
+- Scheduler 

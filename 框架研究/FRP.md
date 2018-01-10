@@ -41,3 +41,9 @@
 - Subject
 
 - Scheduler 
+
+## 应用
+
+状态管理工具mobx
+
+![](../imgs/mobx-flow.png)
